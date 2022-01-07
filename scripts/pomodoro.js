@@ -21,8 +21,8 @@ function startTime() {
         pendingTime.style.display= 'block';
         startButton.setAttribute("disabled","disabled");
         taskInput.setAttribute("disabled","disabled");
-        const min = 1;
-        pendingTime.innerHTML = `Pending time: ${min-1}:59`
+        var min = parseInt(document.getElementById('taskminutes').value)-1;
+        pendingTime.innerHTML = `Pending time: ${min}:59`
         timerWorker = new Worker("scripts/timer/timer.js");
         var interval = window.setInterval(function(){
             timerWorker.postMessage(min);
@@ -30,7 +30,11 @@ function startTime() {
                 if(!e.data) {
                     stopCounter(interval);
                 } else {
-                    pendingTime.innerHTML = e.data;
+                    const time = e.data;
+                    min = time[0];
+                    const sec = time[1];
+                    pendingTime.innerHTML = `Pending time: ${min}: ${sec > 9 ? sec : '0' + sec}`;
+                    debugger;
                 }
             };
         }, 100);
