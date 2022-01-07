@@ -1,19 +1,23 @@
-
 sec = 59;
 min = 0;
 
-function timer() {
-    this.sec--;
-    if(!this.sec) {
-        this.sec = 59;
-        this.min--;
+self.onmessage = function (msg) {
+
+    if(msg != null && msg != undefined){
+        min=--msg.data;
+        decreaseTime();
     }
-    if(this.min < 0) {
-        this.min = 0;
-        this.sec = 0;
-    }
-    postMessage(`Pending time: ${this.min}: ${this.sec > 9 ? this.sec : '0' + this.sec}`);
 }
 
-
-timer();
+function decreaseTime() {
+    sec--;
+    if(!sec) {
+        sec = 59;
+        min--;
+    }
+    if(min < 0) {
+        postMessage(0);
+    } else {
+        postMessage(`Pending time: ${min}: ${sec > 9 ? sec : '0' + sec}`);
+    }
+}

@@ -23,11 +23,16 @@ function startTime() {
         taskInput.setAttribute("disabled","disabled");
         const min = 1;
         pendingTime.innerHTML = `Pending time: ${min-1}:59`
+        timerWorker = new Worker("scripts/timer/timer.js");
         var interval = window.setInterval(function(){
-            counterWorker = new Worker("scripts/timer/timer.js");
-            counterWorker.postMessage(min);
-            pendingTime.onmessage = displayCounter;
-            if(!timer.min && !timer.sec)  stopCounter(interval);
+            timerWorker.postMessage(min);
+            timerWorker.onmessage = function(e) {
+                if(!e.data) {
+                    stopCounter(interval);
+                } else {
+                    pendingTime.innerHTML = e.data;
+                }
+            };
         }, 100);
     }
 }
@@ -38,8 +43,4 @@ function stopCounter(interval) {
     startButton.removeAttribute('disabled');  
     taskInput.value = '';
     taskInput.removeAttribute("disabled");  
-}
-
-function displayCounter(e) {
-    pendingTime.innerHTML = e.data;
 }
