@@ -1,6 +1,8 @@
 const taskInput = document.querySelector("#taskname");  
 const startButton = document.querySelector("#start");
 const pendingTime = document.querySelector("#pendingTime");
+const tasks = document.querySelector("#tasks");
+
 
 var counterWorker;
 
@@ -9,7 +11,7 @@ pendingTime.style.display= 'none';
 startButton.onclick = startTime;
 
 function validate(){
-    if(taskInput.value === ""){
+    if(taskInput.value === "" || checkTaskExists(taskInput.value)){
         startButton.setAttribute("disabled","disabled");
     } else {
         startButton.removeAttribute("disabled");  
@@ -22,7 +24,8 @@ function startTime() {
         startButton.setAttribute("disabled","disabled");
         taskInput.setAttribute("disabled","disabled");
         var min = parseInt(document.getElementById('taskminutes').value)-1;
-        pendingTime.innerHTML = `Pending time: ${min}:59`
+        pendingTime.innerHTML = `Pending time: ${min}:59`;
+        saveAndShowTasks();
         timerWorker = new Worker("scripts/timer/timer.js");
         var interval = window.setInterval(function(){
             timerWorker.postMessage(min);
@@ -34,7 +37,6 @@ function startTime() {
                     min = time[0];
                     const sec = time[1];
                     pendingTime.innerHTML = `Pending time: ${min}: ${sec > 9 ? sec : '0' + sec}`;
-                    debugger;
                 }
             };
         }, 100);
@@ -47,4 +49,15 @@ function stopCounter(interval) {
     startButton.removeAttribute('disabled');  
     taskInput.value = '';
     taskInput.removeAttribute("disabled");  
+}
+
+
+function saveAndShowTasks() {
+    saveTask(taskInput.value);
+    const task_list = getTasks();
+    var cadena = '<h2> Listado de tareas </h2>';
+    task_list.forEach(x => {
+        cadena += `<p> *\t${x.id} - ${x.date} </p>`
+    });
+    tasks.innerHTML = cadena;
 }
