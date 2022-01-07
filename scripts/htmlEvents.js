@@ -16,14 +16,23 @@ function validate(){
 
 function startTime() {
     pendingTime.style.display= 'block';
-    const min = 2;
+    startButton.setAttribute("disabled","disabled");
+    taskInput.setAttribute("disabled","disabled");
+    const min = 1;
     pendingTime.innerHTML = `Pending time: ${min-1}:59`
     var timer = new Timer(min);
-    window.setInterval(function(){
+    var interval = window.setInterval(function(){
         const message = timer.decreaseTime();
         pendingTime.innerHTML = message;
-        if(!timer.min && !timer.sec) {
-            //clearInterval(intervalId) 
-        }
-    }, 1000);
+        if(!timer.min && !timer.sec)  stopCounter(interval);        
+   // }, 1000);
+    }, 100);
+}
+
+function stopCounter(interval) {
+    clearInterval(interval);
+    pendingTime.style.display= 'none';
+    startButton.removeAttribute('disabled');  
+    taskInput.value = '';
+    taskInput.removeAttribute("disabled");  
 }
