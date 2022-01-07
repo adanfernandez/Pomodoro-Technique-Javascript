@@ -4,11 +4,21 @@
         <script src="scripts/tasks/tasks.js"></script>
     </head>
     <body>
+        <h1>Pomodoro technique</h1>
         <form id="taskform" name="taskform" oninput="tasknumminutes.value=taskminutes.value">
+            <h2>Task definition</h2>
             Task: <input type="text" id="taskname" name="taskname" autofocus="" required="" placeholder="Write here a description for your next task" size="50"><br>
-            Duration: <input type="range" id="taskminutes" name="taskminutes" min="1" max="25" value="25" required=""> <output name="tasknumminutes">25</output> minutes<br>
-            <input type="button" id="start" name="start" value="Start pomodoro" disabled="">
-          </form>
+            Duration: <input type="range" id="taskminutes" name="taskminutes" min="1" max="25" value="1" required=""> <output name="tasknumminutes">1</output> minutes<br>
+            <input type="button" id="start" name="start" value="Start task" disabled="">
+            <input type="button" id="take_break" name="take_break" value="Take a break" disabled="">
+        </form>
+
+
+        <form id="breakform" name="breakform" oninput="breaknumminutes.value=breakminutes.value">
+            <h2>Break definition</h2>
+            Duration: <input type="range" id="breakminutes" name="breakminutes" min="3" max="5" value="5" required=""> <output name="breaknumminutes">5</output> minutes<br>
+            <input type="button" id="start_break" name="start_break" value="Start break">
+        </form>
 
           <section id="pendingTime"></section>
           <section id="tasks"></section>
