@@ -1,10 +1,15 @@
 <html>
+    <head>
+        <script src="scripts/timer/timer.js"></script>
+    </head>
     <body>
         <form id="taskform" name="taskform" oninput="tasknumminutes.value=taskminutes.value">
             Task: <input type="text" id="taskname" name="taskname" autofocus="" required="" placeholder="Write here a description for your next task" size="50"><br>
             Duration: <input type="range" id="taskminutes" name="taskminutes" min="1" max="25" value="25" required=""> <output name="tasknumminutes">25</output> minutes<br>
             <input type="button" id="start" name="start" value="Start pomodoro" disabled="">
           </form>
+
+          <section id="pendingTime"></section>
     </body>
     <!--is placed at the end to load -->
     <script src='scripts/htmlEvents.js'></script>
