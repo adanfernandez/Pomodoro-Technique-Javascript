@@ -53,7 +53,7 @@ function startTask() {
                     pendingTime.innerHTML = `Pending time: ${min}: ${sec > 9 ? sec : '0' + sec}`;
                 }
             };
-        }, 100);
+        }, 1000);
     }
 }
 
@@ -82,7 +82,7 @@ function startBreak () {
                     pendingTime.innerHTML = `Pending time: ${min}:${sec > 9 ? sec : '0' + sec}`;
                 }
             };
-        }, 100);
+        }, 1000);
     }
 }
 
